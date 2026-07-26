@@ -338,7 +338,6 @@ The platform is divided into independent business modules. Each module represent
 | MOD-014 | Platform Subscription Management | Manage club subscriptions to the KCMS platform. |
 | MOD-015 | Audit Logs | Record system activities. |
 | MOD-016 | Settings | Platform and club settings. |
-| MOD-017 | Settings | Platform and club settings. |
 
 ---
 
