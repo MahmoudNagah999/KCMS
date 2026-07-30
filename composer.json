@@ -3,21 +3,25 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": [
-        "laravel",
-        "framework"
-    ],
+    "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "filament/filament": "*",
         "laravel/framework": "^13.8",
-        "laravel/tinker": "^3.0"
+        "laravel/tinker": "^3.0",
+        "spatie/laravel-activitylog": "*",
+        "spatie/laravel-permission": "*"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "*",
+        "barryvdh/laravel-ide-helper": "*",
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "*",
         "laravel/pail": "^1.2.5",
         "laravel/pao": "^1.0.6",
         "laravel/pint": "^1.27",
+        "laravel/telescope": "*",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^4.7",
@@ -36,6 +40,35 @@
         }
     },
     "scripts": {
+        "format": [
+            "@php vendor/bin/pint"
+        ],
+
+        "analyse": [
+            "@php vendor/bin/phpstan analyse"
+        ],
+
+        "quality": [
+            "@composer format",
+            "@composer analyse",
+            "@composer test"
+        ],
+
+        "clear": [
+            "@php artisan optimize:clear"
+        ],
+
+        "ide": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
+        ],
+        "analyse": [
+            "@php vendor/bin/phpstan analyse"
+        ],
+        "post-update-cmd": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
+        ],
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
@@ -54,7 +87,8 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",

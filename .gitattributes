@@ -1,11 +1,15 @@
 * text=auto eol=lf
 
-*.blade.php diff=html
-*.css diff=css
-*.html diff=html
-*.md diff=markdown
-*.php diff=php
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
 
 /.github export-ignore
-CHANGELOG.md export-ignore
-.styleci.yml export-ignore
+/tests export-ignore
+/phpunit.xml export-ignore
+
+_ide_helper.php
+.phpstorm.meta.php
