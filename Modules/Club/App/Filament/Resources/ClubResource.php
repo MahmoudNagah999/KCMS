@@ -12,6 +12,11 @@ use Modules\Club\App\Models\Club;
 use Modules\Club\App\Filament\Resources\ClubResource\Pages;
 use Modules\Shared\App\Enums\ClubStatus;
 use Modules\Shared\App\Enums\SubscriptionStatus;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Schemas\Components\Section;
 
 class ClubResource extends Resource
 {
@@ -48,7 +53,7 @@ class ClubResource extends Resource
         return $schema
             ->components([
 
-                Components\Section::make('Club Information')
+                Section::make('Club Information')
                     ->schema([
 
                         Components\TextInput::make('code')
@@ -91,7 +96,7 @@ class ClubResource extends Resource
                     ->columns(2),
 
 
-                Components\Section::make('Status')
+                Section::make('Status')
                     ->schema([
 
                         Components\Select::make('club_status')
@@ -148,13 +153,13 @@ class ClubResource extends Resource
 
                 Tables\Columns\TextColumn::make('club_status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (ClubStatus  $state): string => match ($state) {
 
-                        ClubStatus::ACTIVE->value => 'success',
+                        ClubStatus::ACTIVE => 'success',
 
-                        ClubStatus::SUSPENDED->value => 'danger',
+                        ClubStatus::SUSPENDED => 'danger',
 
-                        ClubStatus::INACTIVE->value => 'gray',
+                        ClubStatus::INACTIVE => 'gray',
 
                         default => 'gray',
                     }),
@@ -162,14 +167,14 @@ class ClubResource extends Resource
 
                 Tables\Columns\TextColumn::make('subscription_status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (SubscriptionStatus $state): string => match ($state) {
 
-                        SubscriptionStatus::ACTIVE->value => 'success',
+                        SubscriptionStatus::ACTIVE => 'success',
 
-                        SubscriptionStatus::TRIAL->value => 'warning',
+                        SubscriptionStatus::TRIAL => 'warning',
 
-                        SubscriptionStatus::EXPIRED->value,
-                        SubscriptionStatus::CANCELLED->value => 'danger',
+                        SubscriptionStatus::EXPIRED,
+                        SubscriptionStatus::CANCELLED => 'danger',
 
                         default => 'gray',
                     }),
@@ -206,16 +211,16 @@ class ClubResource extends Resource
 
             ->actions([
 
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
 
-                Tables\Actions\DeleteAction::make(),
+                DeleteAction::make(),
 
             ])
 
             ->bulkActions([
 
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
 
             ]);

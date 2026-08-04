@@ -50,6 +50,11 @@ class Club extends Model
         return ClubFactory::new();
     }
 
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Relationships
