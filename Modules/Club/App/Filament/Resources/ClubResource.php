@@ -22,34 +22,26 @@ class ClubResource extends Resource
 {
     protected static ?string $model = Club::class;
 
-
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
-
 
     public static function getNavigationGroup(): ?string
     {
         return __('club::navigation.group');
     }
 
-
     protected static ?string $navigationLabel = null;
-
 
     public static function getNavigationLabel(): string
     {
         return __('club::navigation.clubs');
     }
 
-
     protected static ?string $modelLabel = 'Club';
-
 
     protected static ?string $pluralModelLabel = 'Clubs';
 
-
     public static function form(Schema $schema): Schema 
     {
-
         return $schema
             ->components([
 
@@ -62,39 +54,31 @@ class ClubResource extends Resource
                             ->unique(ignoreRecord: true)
                             ->maxLength(20),
 
-
                         Components\TextInput::make('name')
                             ->label('Arabic Name')
                             ->required()
                             ->maxLength(255),
 
-
                         Components\TextInput::make('name_en')
                             ->label('English Name')
                             ->maxLength(255),
-
 
                         Components\TextInput::make('email')
                             ->email()
                             ->maxLength(255),
 
-
                         Components\TextInput::make('phone')
                             ->tel()
                             ->maxLength(30),
-
 
                         Components\FileUpload::make('logo')
                             ->image()
                             ->directory('clubs/logos'),
 
-
                         Components\Textarea::make('address')
                             ->columnSpanFull(),
-
                     ])
                     ->columns(2),
-
 
                 Section::make('Status')
                     ->schema([
@@ -111,7 +95,6 @@ class ClubResource extends Resource
                             ->default(ClubStatus::ACTIVE->value)
                             ->required(),
 
-
                         Components\Select::make('subscription_status')
                             ->label('Subscription Status')
                             ->options(
@@ -123,10 +106,8 @@ class ClubResource extends Resource
                             )
                             ->default(SubscriptionStatus::TRIAL->value)
                             ->required(),
-
                     ])
                     ->columns(2),
-
             ]);
     }
 
@@ -142,14 +123,11 @@ class ClubResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
 
-
                 Tables\Columns\TextColumn::make('phone'),
-
 
                 Tables\Columns\TextColumn::make('club_status')
                     ->badge()
@@ -163,7 +141,6 @@ class ClubResource extends Resource
 
                         default => 'gray',
                     }),
-
 
                 Tables\Columns\TextColumn::make('subscription_status')
                     ->badge()
@@ -209,7 +186,7 @@ class ClubResource extends Resource
 
             ])
 
-            ->actions([
+            ->recordActions([
 
                 EditAction::make(),
 
@@ -217,8 +194,7 @@ class ClubResource extends Resource
 
             ])
 
-            ->bulkActions([
-
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
