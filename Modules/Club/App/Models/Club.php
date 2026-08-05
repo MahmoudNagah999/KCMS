@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Club\Database\Factories\ClubFactory;
 use Modules\Shared\App\Enums\ClubStatus;
 use Modules\Shared\App\Enums\SubscriptionStatus;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\User;
 
 class Club extends Model
 {
@@ -61,9 +63,13 @@ class Club extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'club_user');
+    }
+
     // TODO: Define relationships here
     // public function branches() {}
-    // public function users() {}
     // public function players() {}
     // public function subscriptions() {}
 }

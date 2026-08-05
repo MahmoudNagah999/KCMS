@@ -17,6 +17,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Schemas\Components\Section;
+use Modules\Club\App\Filament\Resources\ClubResource\RelationManagers;
 
 class ClubResource extends Resource
 {
@@ -213,6 +214,13 @@ class ClubResource extends Resource
 
             'edit' => Pages\EditClub::route('/{record}/edit'),
 
+        ];
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\UsersRelationManager::class,
         ];
     }
 }
