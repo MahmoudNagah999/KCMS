@@ -6,4 +6,5 @@ return [
     App\Providers\Filament\ClubPanelProvider::class,
     App\Providers\TelescopeServiceProvider::class,
     Modules\Club\App\Providers\ClubServiceProvider::class,
+    Modules\Subscription\App\Providers\SubscriptionServiceProvider::class,
 ];
