@@ -63,7 +63,12 @@ class UsersRelationManager extends RelationManager
 
                 TextColumn::make('role')
                     ->label('Role')
-                    ->state(fn (User $record): string => $record->roles->pluck('name')->join(', ') ?: '—'),
+                    ->state(function (User $record): string {
+                        app(PermissionRegistrar::class)
+                            ->setPermissionsTeamId($this->getOwnerRecord()->getKey());
+
+                        return $record->roles->pluck('name')->join(', ') ?: '—';
+                    }),
 
             ])
             ->headerActions([
@@ -83,6 +88,9 @@ class UsersRelationManager extends RelationManager
                             ->required(),
                     ])
                     ->after(function (array $data, User $record): void {
+                        app(PermissionRegistrar::class)
+                            ->setPermissionsTeamId($this->getOwnerRecord()->getKey());
+
                         $record->syncRoles([$data['role']]);
                     }),
 
@@ -94,6 +102,9 @@ class UsersRelationManager extends RelationManager
                         'role' => $record->roles->first()?->name,
                     ])
                     ->action(function (array $data, User $record): void {
+                        app(PermissionRegistrar::class)
+                            ->setPermissionsTeamId($this->getOwnerRecord()->getKey());
+
                         $record->syncRoles([$data['role']]);
                     }),
 
