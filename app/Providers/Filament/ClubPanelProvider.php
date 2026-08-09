@@ -18,6 +18,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Modules\Club\App\Models\Club;
 use Filament\Pages\Dashboard;
 use Modules\Player\App\Filament\PlayerPlugin;
+use Modules\PlayerSubscription\App\Filament\PlayerSubscriptionPlugin;
 
 class ClubPanelProvider extends PanelProvider
 {
@@ -54,6 +55,7 @@ class ClubPanelProvider extends PanelProvider
             ])
             ->plugins([
                 PlayerPlugin::make(),
+                PlayerSubscriptionPlugin::make(),
             ]);
     }
 }

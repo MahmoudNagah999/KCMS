@@ -8,6 +8,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -22,6 +23,12 @@ use Modules\Player\App\Filament\Resources\PlayerResource\Pages;
 use Modules\Player\App\Models\Player;
 use Modules\Shared\App\Enums\BeltRank;
 use Modules\Shared\App\Enums\Gender;
+use Filament\Schemas\Components\Utilities\Set;
+use Modules\Player\App\Support\EgyptianNationalIdValidator;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
 
 class PlayerResource extends Resource
 {
@@ -50,7 +57,16 @@ class PlayerResource extends Resource
                             ->label('National ID')
                             ->required()
                             ->length(14)
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)->rule(fn () => fn (string $attribute, $value, \Closure $fail) => 
+                                EgyptianNationalIdValidator::isValid($value) ?: $fail('الرقم القومي غير صحيح.')
+                            )
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (Set $set, ?string $state): void {
+                                if ($state && EgyptianNationalIdValidator::isValid($state)) {
+                                    $set('gender', EgyptianNationalIdValidator::genderFrom($state)?->value);
+                                    $set('birth_date', EgyptianNationalIdValidator::birthDateFrom($state)?->format('Y-m-d'));
+                                }
+                            }),
 
                         DatePicker::make('birth_date')
                             ->required()
@@ -115,8 +131,29 @@ class PlayerResource extends Resource
                     ->toggleable(),
 
             ])
+            ->filters([
+
+                SelectFilter::make('belt')
+                    ->options(
+                        collect(BeltRank::cases())
+                            ->mapWithKeys(fn (BeltRank $b) => [$b->value => ucfirst($b->value)])
+                            ->toArray()
+                    ),
+
+                SelectFilter::make('gender')
+                    ->options(
+                        collect(Gender::cases())
+                            ->mapWithKeys(fn (Gender $g) => [$g->value => ucfirst($g->value)])
+                            ->toArray()
+                    ),
+
+                TrashedFilter::make(),
+
+            ])
             ->recordActions([
 
+                ViewAction::make(),
+                
                 EditAction::make(),
 
                 DeleteAction::make(),
@@ -136,7 +173,45 @@ class PlayerResource extends Resource
         return [
             'index' => Pages\ListPlayers::route('/'),
             'create' => Pages\CreatePlayer::route('/create'),
+            'view' => Pages\ViewPlayer::route('/{record}'),
             'edit' => Pages\EditPlayer::route('/{record}/edit'),
         ];
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+
+                Section::make('Player Details')
+                    ->schema([
+
+                        ImageEntry::make('photo')
+                            ->circular(),
+
+                        TextEntry::make('name'),
+
+                        TextEntry::make('national_id')
+                            ->label('National ID'),
+
+                        TextEntry::make('birth_date')
+                            ->date(),
+
+                        TextEntry::make('gender')
+                            ->badge(),
+
+                        TextEntry::make('belt')
+                            ->badge(),
+
+                        TextEntry::make('federation_number')
+                            ->label('Federation Number'),
+
+                        TextEntry::make('created_at')
+                            ->dateTime(),
+
+                    ])
+                    ->columns(2),
+
+            ]);
     }
 }
