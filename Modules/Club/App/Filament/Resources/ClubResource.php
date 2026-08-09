@@ -221,6 +221,7 @@ class ClubResource extends Resource
     {
         return [
             RelationManagers\UsersRelationManager::class,
+            RelationManagers\SubscriptionsRelationManager::class,
         ];
     }
 }

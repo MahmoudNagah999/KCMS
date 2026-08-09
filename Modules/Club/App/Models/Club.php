@@ -68,8 +68,12 @@ class Club extends Model
         return $this->belongsToMany(User::class, 'club_user');
     }
 
+    public function subscriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\Modules\Subscription\App\Models\Subscription::class);
+    }
+
     // TODO: Define relationships here
     // public function branches() {}
     // public function players() {}
-    // public function subscriptions() {}
 }

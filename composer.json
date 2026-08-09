@@ -10,6 +10,7 @@
         "filament/filament": "*",
         "laravel/framework": "^13.8",
         "laravel/tinker": "^3.0",
+        "smalot/pdfparser": "*",
         "spatie/laravel-activitylog": "*",
         "spatie/laravel-permission": "*"
     },
