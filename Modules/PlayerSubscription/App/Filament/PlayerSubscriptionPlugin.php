@@ -7,6 +7,7 @@ namespace Modules\PlayerSubscription\App\Filament;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Modules\PlayerSubscription\App\Filament\Resources\PlayerSubscriptionPlanResource;
+use Modules\PlayerSubscription\App\Filament\Resources\PlayerSubscriptionResource;
 
 class PlayerSubscriptionPlugin implements Plugin
 {
@@ -20,6 +21,7 @@ class PlayerSubscriptionPlugin implements Plugin
         $panel
             ->resources([
                 PlayerSubscriptionPlanResource::class,
+                PlayerSubscriptionResource::class,
             ]);
     }
 

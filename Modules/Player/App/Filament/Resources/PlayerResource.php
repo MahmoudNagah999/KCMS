@@ -21,6 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Modules\Player\App\Filament\Resources\PlayerResource\Pages;
 use Modules\Player\App\Models\Player;
+use Modules\PlayerSubscription\App\Filament\RelationManagers\PlayerSubscriptionsRelationManager;
 use Modules\Shared\App\Enums\BeltRank;
 use Modules\Shared\App\Enums\Gender;
 use Filament\Schemas\Components\Utilities\Set;
@@ -213,5 +214,12 @@ class PlayerResource extends Resource
                     ->columns(2),
 
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            PlayerSubscriptionsRelationManager::class,
+        ];
     }
 }
