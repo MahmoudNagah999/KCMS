@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Club\Pages\Tenancy\RegisterClub;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,14 +29,17 @@ class ClubPanelProvider extends PanelProvider
             ->id('club')
             ->path('club')
             ->login()
+            ->passwordReset()
+            ->profile()
             ->tenant(Club::class)
+            ->tenantRegistration(RegisterClub::class)
             ->pages([
                 Dashboard::class,
             ])
             ->colors([
                 'primary' => Color::Blue,
             ])
-            ->brandName('Club Dashboard')
+            ->brandName('KCMS - Club Dashboard')
             ->discoverResources(in: app_path('Filament/Club/Resources'), for: 'App\Filament\Club\Resources')
             ->discoverPages(in: app_path('Filament/Club/Pages'), for: 'App\Filament\Club\Pages')
             ->discoverWidgets(in: app_path('Filament/Club/Widgets'), for: 'App\Filament\Club\Widgets')

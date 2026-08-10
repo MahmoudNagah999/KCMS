@@ -1,11 +1,13 @@
 1- complete admin auth
-2- complete club dashboard auth 
+2- admin widget
+3- complete club dashboard auth 
+4- club widget 
+
 3- add permissions and apply it in code 
-4- admin widget 
-5- club widget 
 6- full translate club dashboard
 7- add tests to moduels 
 8- full document project  
+9- mails on admin
 
 version 02 
 1- prepare exam sheet
