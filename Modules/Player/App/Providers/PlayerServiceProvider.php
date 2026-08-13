@@ -15,6 +15,8 @@ class PlayerServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/../../Database/migrations');
 
+        $this->loadTranslationsFrom(__DIR__.'/../../lang', 'player');
+
         Gate::policy(Player::class, PlayerPolicy::class);
 
     }

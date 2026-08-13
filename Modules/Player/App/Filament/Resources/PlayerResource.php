@@ -42,24 +42,26 @@ class PlayerResource extends Resource
         return $schema
             ->components([
 
-                Section::make('Player Details')
+                Section::make(__('player::resource.section.player_details'))
                     ->schema([
 
                         FileUpload::make('photo')
+                            ->label(__('player::resource.field.photo'))
                             ->image()
                             ->avatar()
                             ->directory('players'),
 
                         TextInput::make('name')
+                            ->label(__('player::resource.field.name'))
                             ->required()
                             ->maxLength(255),
 
                         TextInput::make('national_id')
-                            ->label('National ID')
+                            ->label(__('player::resource.field.national_id'))
                             ->required()
                             ->length(14)
-                            ->unique(ignoreRecord: true)->rule(fn () => fn (string $attribute, $value, \Closure $fail) => 
-                                EgyptianNationalIdValidator::isValid($value) ?: $fail('الرقم القومي غير صحيح.')
+                            ->unique(ignoreRecord: true)->rule(fn () => fn (string $attribute, $value, \Closure $fail) =>
+                                EgyptianNationalIdValidator::isValid($value) ?: $fail(__('player::resource.validation.invalid_national_id'))
                             )
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (Set $set, ?string $state): void {
@@ -70,28 +72,23 @@ class PlayerResource extends Resource
                             }),
 
                         DatePicker::make('birth_date')
+                            ->label(__('player::resource.field.birth_date'))
                             ->required()
                             ->maxDate(now()),
 
                         Select::make('gender')
-                            ->options(
-                                collect(Gender::cases())
-                                    ->mapWithKeys(fn (Gender $g) => [$g->value => ucfirst($g->value)])
-                                    ->toArray()
-                            )
+                            ->label(__('player::resource.field.gender'))
+                            ->options(Gender::class)
                             ->required(),
 
                         Select::make('belt')
-                            ->options(
-                                collect(BeltRank::cases())
-                                    ->mapWithKeys(fn (BeltRank $b) => [$b->value => ucfirst($b->value)])
-                                    ->toArray()
-                            )
+                            ->label(__('player::resource.field.belt'))
+                            ->options(BeltRank::class)
                             ->required()
                             ->searchable(),
 
                         TextInput::make('federation_number')
-                            ->label('Federation Number')
+                            ->label(__('player::resource.field.federation_number'))
                             ->unique(ignoreRecord: true),
 
                     ])
@@ -106,47 +103,46 @@ class PlayerResource extends Resource
             ->columns([
 
                 ImageColumn::make('photo')
+                    ->label(__('player::resource.field.photo'))
                     ->circular(),
 
                 TextColumn::make('name')
+                    ->label(__('player::resource.field.name'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('national_id')
-                    ->label('National ID')
+                    ->label(__('player::resource.field.national_id'))
                     ->searchable(),
 
                 TextColumn::make('birth_date')
+                    ->label(__('player::resource.field.birth_date'))
                     ->date()
                     ->sortable(),
 
                 TextColumn::make('gender')
+                    ->label(__('player::resource.field.gender'))
                     ->badge(),
 
                 TextColumn::make('belt')
+                    ->label(__('player::resource.field.belt'))
                     ->badge()
                     ->sortable(),
 
                 TextColumn::make('federation_number')
-                    ->label('Federation #')
+                    ->label(__('player::resource.field.federation_number_short'))
                     ->toggleable(),
 
             ])
             ->filters([
 
                 SelectFilter::make('belt')
-                    ->options(
-                        collect(BeltRank::cases())
-                            ->mapWithKeys(fn (BeltRank $b) => [$b->value => ucfirst($b->value)])
-                            ->toArray()
-                    ),
+                    ->label(__('player::resource.field.belt'))
+                    ->options(BeltRank::class),
 
                 SelectFilter::make('gender')
-                    ->options(
-                        collect(Gender::cases())
-                            ->mapWithKeys(fn (Gender $g) => [$g->value => ucfirst($g->value)])
-                            ->toArray()
-                    ),
+                    ->label(__('player::resource.field.gender'))
+                    ->options(Gender::class),
 
                 TrashedFilter::make(),
 
@@ -154,9 +150,7 @@ class PlayerResource extends Resource
             ->recordActions([
 
                 ViewAction::make(),
-                
                 EditAction::make(),
-
                 DeleteAction::make(),
 
             ])
@@ -184,30 +178,36 @@ class PlayerResource extends Resource
         return $schema
             ->components([
 
-                Section::make('Player Details')
+                Section::make(__('player::resource.section.player_details'))
                     ->schema([
 
                         ImageEntry::make('photo')
+                            ->label(__('player::resource.field.photo'))
                             ->circular(),
 
-                        TextEntry::make('name'),
+                        TextEntry::make('name')
+                            ->label(__('player::resource.field.name')),
 
                         TextEntry::make('national_id')
-                            ->label('National ID'),
+                            ->label(__('player::resource.field.national_id')),
 
                         TextEntry::make('birth_date')
+                            ->label(__('player::resource.field.birth_date'))
                             ->date(),
 
                         TextEntry::make('gender')
+                            ->label(__('player::resource.field.gender'))
                             ->badge(),
 
                         TextEntry::make('belt')
+                            ->label(__('player::resource.field.belt'))
                             ->badge(),
 
                         TextEntry::make('federation_number')
-                            ->label('Federation Number'),
+                            ->label(__('player::resource.field.federation_number')),
 
                         TextEntry::make('created_at')
+                            ->label(__('player::resource.field.created_at'))
                             ->dateTime(),
 
                     ])
