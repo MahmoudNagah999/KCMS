@@ -10,6 +10,6 @@ class SharedServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->loadTranslationsFrom(__DIR__.'/../../../lang', 'shared');
+        $this->loadTranslationsFrom(__DIR__.'/../../lang', 'shared');
     }
 }
