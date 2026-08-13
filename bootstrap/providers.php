@@ -2,6 +2,7 @@
 
 return [
     App\Providers\AppServiceProvider::class,
+    Modules\Shared\App\Providers\SharedServiceProvider::class,
     App\Providers\Filament\AdminPanelProvider::class,
     App\Providers\Filament\ClubPanelProvider::class,
     App\Providers\TelescopeServiceProvider::class,

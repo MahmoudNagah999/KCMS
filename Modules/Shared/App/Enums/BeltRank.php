@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Shared\App\Enums;
 
-enum BeltRank: string
+use Filament\Support\Contracts\HasLabel;
+
+enum BeltRank: string implements HasLabel
 {
     case WHITE = 'white';
 
@@ -35,5 +37,10 @@ enum BeltRank: string
     case BLACK_DAN_8 = 'black-dan-8';
     case BLACK_DAN_9 = 'black-dan-9';
     case BLACK_DAN_10 = 'black-dan-10';
+
+    public function getLabel(): ?string
+    {
+        return __("shared::enums.belt_rank.{$this->value}");
+    }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\SetLocale;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -21,6 +22,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Modules\Club\App\Filament\ClubPlugin;
 use Modules\Subscription\App\Filament\SubscriptionPlugin;
 use App\Http\Middleware\SetPlatformPermissionsTeam;
+use Filament\Navigation\MenuItem;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -50,7 +52,8 @@ class AdminPanelProvider extends PanelProvider
                 // FilamentInfoWidget::class,
             ])
             ->middleware([
-                 SetPlatformPermissionsTeam::class,
+                SetLocale::class,
+                SetPlatformPermissionsTeam::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
@@ -67,6 +70,11 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 ClubPlugin::make(),
                 SubscriptionPlugin::make(),
+            ])->userMenuItems([
+                MenuItem::make()
+                    ->label(fn () => app()->getLocale() === 'ar' ? 'English' : 'العربية')
+                    ->url(fn () => route('locale.switch', app()->getLocale() === 'ar' ? 'en' : 'ar'))
+                    ->icon('heroicon-o-language'),
             ]);
     }
 }

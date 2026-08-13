@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Shared\App\Enums;
 
-enum SubscriptionStatus: string
+use Filament\Support\Contracts\HasLabel;
+
+enum SubscriptionStatus: string implements HasLabel
 {
     case TRIAL = 'trial';
 
@@ -13,4 +15,9 @@ enum SubscriptionStatus: string
     case EXPIRED = 'expired';
 
     case CANCELLED = 'cancelled';
+
+    public function getLabel(): ?string
+    {
+        return __("shared::enums.subscription_status.{$this->value}");
+    }
 }
