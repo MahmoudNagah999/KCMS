@@ -6,7 +6,10 @@ namespace Modules\Club\App\Providers;
 
 use Filament\Events\TenantSet;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Modules\Club\App\Models\Club;
+use Modules\Club\App\Policies\ClubPolicy;
 use Spatie\Permission\PermissionRegistrar;
 
 class ClubServiceProvider extends ServiceProvider
@@ -21,5 +24,7 @@ class ClubServiceProvider extends ServiceProvider
             app(PermissionRegistrar::class)
                 ->setPermissionsTeamId($event->getTenant()->getKey());
         });
+
+        Gate::policy(Club::class, ClubPolicy::class);
     }
 }

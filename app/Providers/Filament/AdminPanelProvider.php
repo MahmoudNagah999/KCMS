@@ -20,6 +20,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Modules\Club\App\Filament\ClubPlugin;
 use Modules\Subscription\App\Filament\SubscriptionPlugin;
+use App\Http\Middleware\SetPlatformPermissionsTeam;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -49,6 +50,7 @@ class AdminPanelProvider extends PanelProvider
                 // FilamentInfoWidget::class,
             ])
             ->middleware([
+                 SetPlatformPermissionsTeam::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
