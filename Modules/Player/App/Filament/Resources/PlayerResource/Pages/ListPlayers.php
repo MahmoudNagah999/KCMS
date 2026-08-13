@@ -33,11 +33,11 @@ class ListPlayers extends ListRecords
         return [
 
             Action::make('importPdf')
-                ->label('استيراد من PDF')
+                ->label(__('player::import.action.import_pdf'))
                 ->icon('heroicon-o-arrow-up-tray')
                 ->schema([
                     FileUpload::make('pdf_file')
-                        ->label('ملف كشف اللاعبين (PDF)')
+                        ->label(__('player::import.field.pdf_file'))
                         ->acceptedFileTypes(['application/pdf'])
                         ->disk('local')
                         ->directory('player-imports')
@@ -64,10 +64,10 @@ class ListPlayers extends ListRecords
                 }),
 
             Action::make('importReport')
-                ->label('تقرير الاستيراد')
-                ->modalHeading('نتيجة استيراد اللاعبين')
+                ->label(__('player::import.action.import_report'))
+                ->modalHeading(__('player::import.modal.heading'))
                 ->modalSubmitAction(false)
-                ->modalCancelActionLabel('إغلاق')
+                ->modalCancelActionLabel(__('player::import.modal.close'))
                 ->modalContent(fn (): HtmlString => $this->renderImportReport())
                 ->hidden(),
 
@@ -79,13 +79,15 @@ class ListPlayers extends ListRecords
     protected function renderImportReport(): HtmlString
     {
         $summary = sprintf(
-            '<p class="mb-4">تم إنشاء <strong>%d</strong> لاعب، وتحديث <strong>%d</strong> لاعب.</p>',
-            $this->importCreatedCount,
-            $this->importUpdatedCount,
+            '<p class="mb-4">%s</p>',
+            __('player::import.summary', [
+                'created' => $this->importCreatedCount,
+                'updated' => $this->importUpdatedCount,
+            ]),
         );
 
         if (empty($this->importSkippedRows)) {
-            return new HtmlString($summary.'<p>مفيش صفوف اتخطت.</p>');
+            return new HtmlString($summary.'<p>'.__('player::import.no_skipped').'</p>');
         }
 
         $rows = collect($this->importSkippedRows)
@@ -97,19 +99,27 @@ class ListPlayers extends ListRecords
             ))
             ->implode('');
 
+        $thRowNumber = __('player::import.table.row_number');
+        $thName = __('player::import.table.name');
+        $thReason = __('player::import.table.reason');
+
         $table = <<<HTML
             <table class="w-full text-sm text-start">
                 <thead>
                     <tr class="border-b">
-                        <th class="px-3 py-2 text-start">#</th>
-                        <th class="px-3 py-2 text-start">الاسم</th>
-                        <th class="px-3 py-2 text-start">السبب</th>
+                        <th class="px-3 py-2 text-start">{$thRowNumber}</th>
+                        <th class="px-3 py-2 text-start">{$thName}</th>
+                        <th class="px-3 py-2 text-start">{$thReason}</th>
                     </tr>
                 </thead>
                 <tbody>{$rows}</tbody>
             </table>
         HTML;
 
-        return new HtmlString($summary."<p class=\"mb-2\">صفوف اتخطت (".count($this->importSkippedRows)."):</p>".$table);
+        return new HtmlString(
+            $summary
+            .'<p class="mb-2">'.__('player::import.skipped_count', ['count' => count($this->importSkippedRows)]).'</p>'
+            .$table
+        );
     }
 }

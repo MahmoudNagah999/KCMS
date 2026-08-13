@@ -18,6 +18,8 @@ class PlayerSubscriptionServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/../../Database/migrations');
 
+        $this->loadTranslationsFrom(__DIR__.'/../../lang', 'player-subscription');
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ExpirePlayerSubscriptionsCommand::class,

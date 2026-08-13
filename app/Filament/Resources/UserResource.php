@@ -24,25 +24,37 @@ class UserResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
+   public static function getModelLabel(): string
+    {
+        return __('app::resource.user.model.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('app::resource.user.model.plural');
+    }
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
 
-                Section::make('User Details')
+                Section::make(__('app::resource.user.section.details'))
                     ->schema([
 
                         TextInput::make('name')
+                            ->label(__('app::resource.user.field.name'))
                             ->required()
                             ->maxLength(255),
 
                         TextInput::make('email')
+                            ->label(__('app::resource.user.field.email'))
                             ->email()
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
 
                         TextInput::make('password')
+                            ->label(__('app::resource.user.field.password'))
                             ->password()
                             ->revealable()
                             ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
@@ -61,32 +73,30 @@ class UserResource extends Resource
             ->columns([
 
                 TextColumn::make('name')
+                    ->label(__('app::resource.user.field.name'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('email')
+                    ->label(__('app::resource.user.field.email'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('created_at')
+                    ->label(__('app::resource.user.field.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
             ])
             ->recordActions([
-
                 EditAction::make(),
-
                 DeleteAction::make(),
-
             ])
             ->toolbarActions([
-
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-
             ]);
     }
 

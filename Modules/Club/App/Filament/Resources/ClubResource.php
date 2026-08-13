@@ -37,74 +37,72 @@ class ClubResource extends Resource
         return __('club::navigation.clubs');
     }
 
-    protected static ?string $modelLabel = 'Club';
+    public static function getModelLabel(): string
+    {
+        return __('club::resource.model.singular');
+    }
 
-    protected static ?string $pluralModelLabel = 'Clubs';
+    public static function getPluralModelLabel(): string
+    {
+        return __('club::resource.model.plural');
+    }
 
-    public static function form(Schema $schema): Schema 
+    public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
 
-                Section::make('Club Information')
+                Section::make(__('club::resource.section.club_information'))
                     ->schema([
 
                         Components\TextInput::make('code')
-                            ->label('Club Code')
+                            ->label(__('club::resource.field.code'))
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(20),
 
                         Components\TextInput::make('name')
-                            ->label('Arabic Name')
+                            ->label(__('club::resource.field.name'))
                             ->required()
                             ->maxLength(255),
 
                         Components\TextInput::make('name_en')
-                            ->label('English Name')
+                            ->label(__('club::resource.field.name_en'))
                             ->maxLength(255),
 
                         Components\TextInput::make('email')
+                            ->label(__('club::resource.field.email'))
                             ->email()
                             ->maxLength(255),
 
                         Components\TextInput::make('phone')
+                            ->label(__('club::resource.field.phone'))
                             ->tel()
                             ->maxLength(30),
 
                         Components\FileUpload::make('logo')
+                            ->label(__('club::resource.field.logo'))
                             ->image()
                             ->directory('clubs/logos'),
 
                         Components\Textarea::make('address')
+                            ->label(__('club::resource.field.address'))
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
 
-                Section::make('Status')
+                Section::make(__('club::resource.section.status'))
                     ->schema([
 
                         Components\Select::make('club_status')
-                            ->label('Club Status')
-                            ->options(
-                                collect(ClubStatus::cases())
-                                    ->mapWithKeys(fn (ClubStatus $status) => [
-                                        $status->value => ucfirst($status->value),
-                                    ])
-                                    ->toArray()
-                            )
+                            ->label(__('club::resource.field.club_status'))
+                            ->options(ClubStatus::class)
                             ->default(ClubStatus::ACTIVE->value)
                             ->required(),
 
                         Components\Select::make('subscription_status')
-                            ->label('Subscription Status')
-                            ->options(
-                                collect(SubscriptionStatus::cases())
-                                    ->mapWithKeys(fn (SubscriptionStatus $status) => [
-                                        $status->value => ucfirst($status->value),
-                                    ])
-                                    ->toArray()
-                            )
+                            ->label(__('club::resource.field.subscription_status'))
+                            ->options(SubscriptionStatus::class)
                             ->default(SubscriptionStatus::TRIAL->value)
                             ->required(),
                     ])
@@ -112,108 +110,79 @@ class ClubResource extends Resource
             ]);
     }
 
-
-    public static function table(
-        Tables\Table $table
-    ): Tables\Table {
-
+    public static function table(Tables\Table $table): Tables\Table
+    {
         return $table
             ->columns([
 
                 Tables\Columns\TextColumn::make('code')
+                    ->label(__('club::resource.field.code'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('club::resource.field.name'))
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('phone'),
+                Tables\Columns\TextColumn::make('phone')
+                    ->label(__('club::resource.field.phone')),
 
                 Tables\Columns\TextColumn::make('club_status')
+                    ->label(__('club::resource.field.club_status'))
                     ->badge()
-                    ->color(fn (ClubStatus  $state): string => match ($state) {
-
+                    ->color(fn (ClubStatus $state): string => match ($state) {
                         ClubStatus::ACTIVE => 'success',
-
                         ClubStatus::SUSPENDED => 'danger',
-
                         ClubStatus::INACTIVE => 'gray',
-
                         default => 'gray',
                     }),
 
                 Tables\Columns\TextColumn::make('subscription_status')
+                    ->label(__('club::resource.field.subscription_status'))
                     ->badge()
                     ->color(fn (SubscriptionStatus $state): string => match ($state) {
-
                         SubscriptionStatus::ACTIVE => 'success',
-
                         SubscriptionStatus::TRIAL => 'warning',
-
                         SubscriptionStatus::EXPIRED,
                         SubscriptionStatus::CANCELLED => 'danger',
-
                         default => 'gray',
                     }),
 
-
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('club::resource.field.created_at'))
                     ->dateTime()
                     ->sortable(),
 
             ])
-
             ->filters([
 
                 Tables\Filters\SelectFilter::make('club_status')
-                    ->options(
-                        collect(ClubStatus::cases())
-                            ->mapWithKeys(fn (ClubStatus $status) => [
-                                $status->value => ucfirst($status->value),
-                            ])
-                            ->toArray()
-                    ),
-
+                    ->label(__('club::resource.field.club_status'))
+                    ->options(ClubStatus::class),
 
                 Tables\Filters\SelectFilter::make('subscription_status')
-                    ->options(
-                        collect(SubscriptionStatus::cases())
-                            ->mapWithKeys(fn (SubscriptionStatus $status) => [
-                                $status->value => ucfirst($status->value),
-                            ])
-                            ->toArray()
-                    ),
+                    ->label(__('club::resource.field.subscription_status'))
+                    ->options(SubscriptionStatus::class),
 
             ])
-
             ->recordActions([
-
                 EditAction::make(),
-
                 DeleteAction::make(),
-
             ])
-
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-
             ]);
     }
-
 
     public static function getPages(): array
     {
         return [
-
             'index' => Pages\ListClubs::route('/'),
-
             'create' => Pages\CreateClub::route('/create'),
-
             'edit' => Pages\EditClub::route('/{record}/edit'),
-
         ];
     }
 

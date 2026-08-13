@@ -26,17 +26,31 @@ class RoleResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-shield-check';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Access Control';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('app::resource.navigation.access_control');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('app::resource.role.model.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('app::resource.role.model.plural');
+    }
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
 
-                Section::make('Role Details')
+                Section::make(__('app::resource.role.section.details'))
                     ->schema([
 
                         TextInput::make('name')
+                            ->label(__('app::resource.role.field.name'))
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
@@ -46,7 +60,7 @@ class RoleResource extends Resource
 
                     ]),
 
-                Section::make('Permissions')
+                Section::make(__('app::resource.role.section.permissions'))
                     ->schema([
 
                         CheckboxList::make('permissions')
@@ -66,28 +80,24 @@ class RoleResource extends Resource
             ->columns([
 
                 TextColumn::make('name')
+                    ->label(__('app::resource.role.field.name'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('permissions_count')
                     ->counts('permissions')
-                    ->label('Permissions')
+                    ->label(__('app::resource.role.field.permissions_count'))
                     ->badge(),
 
             ])
             ->recordActions([
-
                 EditAction::make(),
-
                 DeleteAction::make(),
-
             ])
             ->toolbarActions([
-
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-
             ]);
     }
 

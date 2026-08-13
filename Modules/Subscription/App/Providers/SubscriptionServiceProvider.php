@@ -15,6 +15,8 @@ class SubscriptionServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/../../Database/migrations');
 
+        $this->loadTranslationsFrom(__DIR__.'/../../lang', 'subscription');
+
         Gate::policy(SubscriptionPlan::class, SubscriptionPlanPolicy::class);
     }
 }

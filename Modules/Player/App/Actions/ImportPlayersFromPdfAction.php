@@ -34,7 +34,7 @@ final class ImportPlayersFromPdfAction
                     $skipped[] = [
                         'row_number' => $row['row_number'],
                         'name' => $row['name'],
-                        'reason' => 'الرقم القومي غير صحيح',
+                        'reason' => __('player::import.reason.invalid_national_id'),
                     ];
                     continue;
                 }
@@ -46,7 +46,7 @@ final class ImportPlayersFromPdfAction
                     $skipped[] = [
                         'row_number' => $row['row_number'],
                         'name' => $row['name'],
-                        'reason' => "الحزام غير معروف: \"{$row['belt_raw']}\"",
+                        'reason' => __('player::import.reason.unknown_belt', ['belt' => $row['belt_raw']]),
                     ];
                     continue;
                 }
@@ -72,7 +72,7 @@ final class ImportPlayersFromPdfAction
                         $skipped[] = [
                             'row_number' => $row['row_number'],
                             'name' => $row['name'],
-                            'reason' => 'اللاعب مسجل بالفعل في نادي آخر — يحتاج نقل يدوي',
+                            'reason' => __('player::import.reason.player_in_another_club'),
                         ];
                         continue;
                     }

@@ -22,17 +22,18 @@ class SubscriptionsRelationManager extends RelationManager
 {
     protected static string $relationship = 'subscriptions';
 
-    public function form(Schema $schema): Schema
+    public function form(Schema $schema): Schema 
     {
         return $schema
             ->components([
 
                 Select::make('subscription_plan_id')
-                    ->label('Plan')
+                    ->label(__('subscription::resource.field.plan'))
                     ->options(SubscriptionPlan::query()->where('is_active', true)->pluck('name', 'id'))
                     ->required(),
 
                 DatePicker::make('starts_at')
+                    ->label(__('subscription::resource.field.starts_at'))
                     ->required()
                     ->default(now()),
 
@@ -46,24 +47,27 @@ class SubscriptionsRelationManager extends RelationManager
             ->columns([
 
                 TextColumn::make('plan.name')
-                    ->label('Plan'),
+                    ->label(__('subscription::resource.field.plan')),
 
                 TextColumn::make('price_paid')
+                    ->label(__('subscription::resource.field.price_paid'))
                     ->money('EGP'),
 
                 TextColumn::make('starts_at')
+                    ->label(__('subscription::resource.field.starts_at'))
                     ->date(),
 
                 TextColumn::make('ends_at')
+                    ->label(__('subscription::resource.field.ends_at'))
                     ->date(),
 
                 TextColumn::make('status')
+                    ->label(__('subscription::resource.field.status'))
                     ->badge(),
 
             ])
             ->defaultSort('created_at', 'desc')
             ->headerActions([
-
                 CreateAction::make()
                     ->using(function (array $data): Subscription {
                         return app(CreateSubscriptionAction::class)->execute(
@@ -74,7 +78,6 @@ class SubscriptionsRelationManager extends RelationManager
                             ])
                         );
                     }),
-
             ]);
     }
 }
