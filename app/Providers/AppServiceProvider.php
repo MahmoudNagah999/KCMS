@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadTranslationsFrom(resource_path('lang'), 'app'); 
+
+        $this->loadTranslationsFrom(resource_path('lang/widgets'), 'widgets');
         
         Gate::policy(Role::class, RolePolicy::class);
         Gate::policy(Permission::class, PermissionPolicy::class);

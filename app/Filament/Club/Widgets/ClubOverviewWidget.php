@@ -43,19 +43,19 @@ class ClubOverviewWidget extends BaseWidget
 
         return [
 
-            Stat::make('إجمالي اللاعبين', $totalPlayers)
+            Stat::make(__('widgets::dashboard.club.stat.total_players'), $totalPlayers)
                 ->icon('heroicon-o-user-group')
                 ->color('primary'),
 
-            Stat::make('اشتراكات نشطة', $activeSubscriptions)
+            Stat::make(__('widgets::dashboard.club.stat.active_subscriptions'), $activeSubscriptions)
                 ->icon('heroicon-o-credit-card')
                 ->color('success'),
 
-            Stat::make('هتنتهي خلال 7 أيام', $expiringSoon)
+            Stat::make(__('widgets::dashboard.club.stat.expiring_soon'), $expiringSoon)
                 ->icon('heroicon-o-exclamation-triangle')
                 ->color($expiringSoon > 0 ? 'danger' : 'success'),
 
-            Stat::make('إيراد الشهر ده', number_format((float) $monthlyRevenue, 2).' EGP')
+            Stat::make(__('widgets::dashboard.club.stat.monthly_revenue'), number_format((float) $monthlyRevenue, 2).' EGP')
                 ->icon('heroicon-o-banknotes')
                 ->color('primary'),
 

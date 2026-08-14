@@ -36,11 +36,11 @@ class UsersRelationManager extends RelationManager
         return $schema
             ->components([
                 Select::make('role')
-                    ->label('Role')
+                    ->label(__('club::resource.field.role'))
                     ->options(
                         collect(ClubRole::cases())
                             ->mapWithKeys(fn (ClubRole $role) => [
-                                $role->value => ucfirst($role->value),
+                                $role->value => $role->getLabel(),
                             ])
                             ->toArray()
                     )
@@ -62,7 +62,7 @@ class UsersRelationManager extends RelationManager
                     ->searchable(),
 
                 TextColumn::make('role')
-                    ->label('Role')
+                    ->label(__('club::resource.field.role'))
                     ->state(function (User $record): string {
                         app(PermissionRegistrar::class)
                             ->setPermissionsTeamId($this->getOwnerRecord()->getKey());
@@ -77,11 +77,11 @@ class UsersRelationManager extends RelationManager
                     ->form(fn (AttachAction $action): array => [
                         $action->getRecordSelect(),
                         Select::make('role')
-                            ->label('Role')
+                            ->label(__('club::resource.field.role'))
                             ->options(
                                 collect(ClubRole::cases())
                                     ->mapWithKeys(fn (ClubRole $role) => [
-                                        $role->value => ucfirst($role->value),
+                                        $role->value => $role->getLabel(),
                                     ])
                                     ->toArray()
                             )

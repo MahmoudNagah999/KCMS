@@ -23,6 +23,7 @@ return [
         'club_status' => 'Club Status',
         'subscription_status' => 'Subscription Status',
         'created_at' => 'Created At',
+        'role' => 'Role',
     ],
 
 ];

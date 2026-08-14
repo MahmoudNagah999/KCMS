@@ -61,4 +61,15 @@ return [
         'fixed_amount' => 'مبلغ ثابت',
     ],
 
+    'club_role' => [
+        'owner' => 'مالك',
+        'coach' => 'مدرب',
+        'administrative' => 'إداري',
+    ],
+
+    'admin_role' => [
+        'super-admin' => 'مدير عام',
+        'admin' => 'مدير',
+    ],
+
 ];

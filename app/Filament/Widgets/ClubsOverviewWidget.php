@@ -23,29 +23,29 @@ class ClubsOverviewWidget extends BaseWidget
 
         return [
 
-            Stat::make('إجمالي الأندية', Club::query()->count())
+            Stat::make(__('widgets::dashboard.admin.stat.total_clubs'), Club::query()->count())
                 ->icon('heroicon-o-building-office-2')
                 ->color('primary'),
 
-            Stat::make('الأندية النشطة', Club::query()
+            Stat::make(__('widgets::dashboard.admin.stat.active_clubs'), Club::query()
                 ->where('club_status', ClubStatus::ACTIVE->value)
                 ->count())
                 ->icon('heroicon-o-check-circle')
                 ->color('success'),
 
-            Stat::make('اشتراكات نشطة', Subscription::query()
+            Stat::make(__('widgets::dashboard.admin.stat.active_subscriptions'), Subscription::query()
                 ->where('status', SubscriptionStatus::ACTIVE->value)
                 ->count())
                 ->icon('heroicon-o-credit-card')
                 ->color('success'),
 
-            Stat::make('أندية Trial', Club::query()
+            Stat::make(__('widgets::dashboard.admin.stat.trial_clubs'), Club::query()
                 ->where('subscription_status', SubscriptionStatus::TRIAL->value)
                 ->count())
                 ->icon('heroicon-o-clock')
                 ->color('warning'),
 
-            Stat::make('إيراد الاشتراكات النشطة', number_format((float) $activeRevenue, 2).' EGP')
+            Stat::make(__('widgets::dashboard.admin.stat.active_subscriptions_revenue'), number_format((float) $activeRevenue, 2).' EGP')
                 ->icon('heroicon-o-banknotes')
                 ->color('primary'),
 

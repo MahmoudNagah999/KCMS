@@ -17,7 +17,10 @@ class ExpiringPlayerSubscriptionsWidget extends BaseWidget
 
     protected int|string|array $columnSpan = 'full';
 
-    protected static ?string $heading = 'اشتراكات لاعبين هتنتهي خلال 7 أيام';
+    protected function getTableHeading(): ?string
+    {
+        return __('widgets::dashboard.club.expiring_subscriptions.heading');
+    }
 
     public function table(Table $table): Table
     {
@@ -33,13 +36,13 @@ class ExpiringPlayerSubscriptionsWidget extends BaseWidget
             ->columns([
 
                 TextColumn::make('player.name')
-                    ->label('اللاعب'),
+                    ->label(__('widgets::dashboard.club.expiring_subscriptions.column.player')),
 
                 TextColumn::make('plan.name')
-                    ->label('الباقة'),
+                    ->label(__('widgets::dashboard.club.expiring_subscriptions.column.plan')),
 
                 TextColumn::make('ends_at')
-                    ->label('تاريخ الانتهاء')
+                    ->label(__('widgets::dashboard.club.expiring_subscriptions.column.ends_at'))
                     ->date()
                     ->color('danger')
                     ->sortable(),

@@ -3,8 +3,8 @@
 3- complete club dashboard auth 
 4- club widget 
 5- add permissions and apply it in code 
+6- full translate club dashboard (issue in change lang )
 
-6- full translate club dashboard
 7- add tests to moduels 
 8- full document project  
 9- mails on admin

@@ -37,6 +37,16 @@ class PlayerResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
+    public static function getModelLabel(): string
+    {
+        return __('player::resource.model.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('player::resource.model.plural');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema

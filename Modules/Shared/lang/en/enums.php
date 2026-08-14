@@ -61,4 +61,15 @@ return [
         'fixed_amount' => 'Fixed Amount',
     ],
 
+    'club_role' => [
+        'owner' => 'Owner',
+        'coach' => 'Coach',
+        'administrative' => 'Administrative',
+    ],
+
+    'admin_role' => [
+        'super-admin' => 'Super Admin',
+        'admin' => 'Admin',
+    ],
+
 ];

@@ -2,6 +2,11 @@
 
 return [
 
+    'model' => [
+        'singular' => 'لاعب',
+        'plural' => 'اللاعبين',
+    ],
+
     'section' => [
         'player_details' => 'بيانات اللاعب',
     ],

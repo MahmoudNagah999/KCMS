@@ -23,6 +23,7 @@ return [
         'club_status' => 'حالة النادي',
         'subscription_status' => 'حالة الاشتراك',
         'created_at' => 'تاريخ الإضافة',
+        'role' => 'الدور',
     ],
 
 ];

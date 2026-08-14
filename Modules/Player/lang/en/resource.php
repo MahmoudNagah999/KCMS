@@ -2,6 +2,11 @@
 
 return [
 
+    'model' => [
+        'singular' => 'Player',
+        'plural' => 'Players',
+    ],
+
     'section' => [
         'player_details' => 'Player Details',
     ],
