@@ -38,8 +38,11 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Emerald,
             ])
-            ->brandName('KCMS - Admin Dashboard')
-            // ->favicon(asset('favicon.ico'))
+            // ->brandName('KCMS - Admin Dashboard')
+            ->brandLogo(asset('images/logo.svg'))
+            ->darkModeBrandLogo(asset('images/logo-white.png'))
+            ->brandLogoHeight('4rem')                       // اضبط الارتفاع المناسب
+            ->favicon(asset('favicon.ico'))
             ->maxContentWidth('full')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

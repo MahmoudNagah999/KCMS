@@ -41,7 +41,11 @@ class ClubPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
-            ->brandName('KCMS - Club Dashboard')
+            // ->brandName('KCMS - Club Dashboard')
+            ->brandLogo(asset('images/logo.svg')) 
+            ->darkModeBrandLogo(asset('images/logo-white.png'))
+            ->brandLogoHeight('4rem')                       // اضبط الارتفاع المناسب
+            ->favicon(asset('favicon.ico')) 
             ->discoverResources(in: app_path('Filament/Club/Resources'), for: 'App\Filament\Club\Resources')
             ->discoverPages(in: app_path('Filament/Club/Pages'), for: 'App\Filament\Club\Pages')
             ->discoverWidgets(in: app_path('Filament/Club/Widgets'), for: 'App\Filament\Club\Widgets')
