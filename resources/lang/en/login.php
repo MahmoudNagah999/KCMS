@@ -7,6 +7,8 @@ return [
         'subheading' => 'Enter your details to access your club dashboard',
         'submit' => 'Sign in',
         'forgot_password' => 'Forgot your password?',
+        'need_club' => 'Need to register a new club?',
+        'register_link' => 'Register a new club',
     ],
 
     'panel' => [

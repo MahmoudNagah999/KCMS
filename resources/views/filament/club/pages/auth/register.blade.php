@@ -1,24 +1,9 @@
 <div>
     <style>
-        .kcms-login-wrap {
-            position: fixed;
-            inset: 0;
-            z-index: 40;
-            display: flex;
-            background: #fff;
-            overflow-y: auto;
-        }
+        .kcms-login-wrap { position: fixed; inset: 0; z-index: 40; display: flex; background: #fff; overflow-y: auto; }
         html.dark .kcms-login-wrap { background: #0b0f19; }
 
-        .kcms-login-form-col {
-            flex: 1 1 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem 1.5rem;
-            min-width: 0;
-        }
-
+        .kcms-login-form-col { flex: 1 1 50%; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem; min-width: 0; }
         .kcms-login-card { width: 100%; max-width: 24rem; }
 
         .kcms-login-logo { height: 3rem; width: auto; margin: 0 auto 1rem; display: block; }
@@ -32,16 +17,9 @@
         .kcms-login-heading p { font-size: .875rem; color: #6b7280; margin-top: .25rem; }
 
         .kcms-login-submit {
-            width: 100%;
-            margin-top: 1.5rem;
-            padding: .625rem 1rem;
-            border-radius: .5rem;
-            border: none;
-            font-weight: 600;
-            font-size: .875rem;
-            color: #fff;
-            background: #2563eb;
-            cursor: pointer;
+            width: 100%; margin-top: 1.5rem; padding: .625rem 1rem; border-radius: .5rem;
+            border: none; font-weight: 600; font-size: .875rem; color: #fff;
+            background: #2563eb; cursor: pointer;
         }
         .kcms-login-submit:hover { opacity: .9; }
 
@@ -50,20 +28,12 @@
         .kcms-login-forgot a:hover { text-decoration: underline; }
 
         .kcms-login-panel-col {
-            flex: 1 1 50%;
-            display: none;
-            position: relative;
-            overflow: hidden;
-            padding: 4rem 3rem;
-            color: #fff;
+            flex: 1 1 50%; display: none; position: relative; overflow: hidden;
+            padding: 4rem 3rem; color: #fff;
             background: linear-gradient(135deg, #2563eb, #1e3a8a);
-            flex-direction: column;
-            justify-content: center;
+            flex-direction: column; justify-content: center;
         }
-
-        @media (min-width: 1024px) {
-            .kcms-login-panel-col { display: flex; }
-        }
+        @media (min-width: 1024px) { .kcms-login-panel-col { display: flex; } }
 
         .kcms-login-panel-inner { max-width: 28rem; position: relative; z-index: 10; }
         .kcms-login-panel-inner h2 { font-size: 1.875rem; font-weight: 700; margin: 0; }
@@ -71,15 +41,7 @@
 
         .kcms-feature-list { list-style: none; margin: 2.5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1.5rem; }
         .kcms-feature-item { display: flex; align-items: flex-start; gap: 1rem; }
-        .kcms-feature-icon {
-            flex-shrink: 0;
-            width: 1.25rem;
-            height: 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 2px;
-        }
+        .kcms-feature-icon { flex-shrink: 0; width: 1.25rem; height: 1.25rem; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
         .kcms-feature-item strong { display: block; font-weight: 600; }
         .kcms-feature-item span { display: block; margin-top: .125rem; font-size: .875rem; opacity: .85; }
     </style>
@@ -92,30 +54,22 @@
                 <div class="kcms-login-heading">
                     <img src="{{ asset('images/logo.svg') }}" alt="{{ config('app.name') }}" class="kcms-login-logo kcms-logo-light" />
                     <img src="{{ asset('images/logo-white.png') }}" alt="{{ config('app.name') }}" class="kcms-login-logo kcms-logo-dark" />
-                    <h1>{{ __('login.form.heading') }}</h1>
-                    {{-- <p>{{ __('login.form.subheading') }}</p> --}}
+                    <h1>{{ __('register.form.heading') }}</h1>
+                    <p>{{ __('register.form.subheading') }}</p>
                 </div>
 
-                <form wire:submit="authenticate">
+                <form wire:submit="register">
                     {{ $this->form }}
                     <button type="submit" class="kcms-login-submit">
-                        {{ __('login.form.submit') }}
+                        {{ __('register.form.submit') }}
                     </button>
                 </form>
 
-                @if (Illuminate\Support\Facades\Route::has('filament.club.auth.password-reset.request'))
+                @if (Illuminate\Support\Facades\Route::has('filament.club.auth.login'))
                     <div class="kcms-login-forgot">
-                        <a href="{{ route('filament.club.auth.password-reset.request') }}">
-                            {{ __('login.form.forgot_password') }}
-                        </a>
-                    </div>
-                @endif
-
-                @if (Illuminate\Support\Facades\Route::has('filament.club.auth.register'))
-                    <div class="kcms-login-forgot">
-                        {{ __('login.form.need_club') }}
-                        <a href="{{ route('filament.club.auth.register') }}">
-                            {{ __('login.form.register_link') }}
+                        {{ __('register.form.have_account') }}
+                        <a href="{{ route('filament.club.auth.login') }}">
+                            {{ __('register.form.login_link') }}
                         </a>
                     </div>
                 @endif
@@ -125,11 +79,11 @@
 
         <div class="kcms-login-panel-col">
             <div class="kcms-login-panel-inner">
-                <h2>{{ __('login.panel.heading') }}</h2>
-                <p>{{ __('login.panel.subheading') }}</p>
+                <h2>{{ __('register.panel.heading') }}</h2>
+                <p>{{ __('register.panel.subheading') }}</p>
 
                 <ul class="kcms-feature-list">
-                    @foreach (__('login.panel.features') as $feature)
+                    @foreach (__('register.panel.features') as $feature)
                         <li class="kcms-feature-item">
                             <span class="kcms-feature-icon">
                                 <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 1rem; height: 1rem;">

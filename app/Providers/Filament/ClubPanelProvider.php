@@ -22,6 +22,7 @@ use Filament\Pages\Dashboard;
 use Modules\Player\App\Filament\PlayerPlugin;
 use Modules\PlayerSubscription\App\Filament\PlayerSubscriptionPlugin;
 use App\Filament\Club\Pages\Auth\Login;
+use App\Filament\Club\Pages\Auth\Register;
 use Filament\Navigation\MenuItem;
 
 class ClubPanelProvider extends PanelProvider
@@ -32,6 +33,7 @@ class ClubPanelProvider extends PanelProvider
             ->id('club')
             ->path('club')
             ->login(Login::class)
+            ->registration(Register::class)
             ->passwordReset()
             ->profile()
             ->tenant(Club::class)

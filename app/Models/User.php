@@ -71,7 +71,10 @@ class User extends Authenticatable implements FilamentUser, HasTenants
                     AdminRole::ADMIN->value,
                 ]);
             })(),
-            'club' => $this->clubs()->exists(),
+            // أي مستخدم مسجّل يقدر يدخل بانل النادي، حتى لو مالوش نادي لسه —
+            // لأنه غالبًا جاي عشان يعمل أول نادي بتاعه عن طريق RegisterClub.
+            // الحماية الفعلية بعد كده بتبقى على مستوى كل نادي (CrudPolicy + tenant scoping).
+            'club' => true,
             default => false,
         };
     }
