@@ -24,9 +24,11 @@ class RegisterClub extends RegisterTenant
 {
     private const TRIAL_DURATION_DAYS = 7;
 
+    protected string $view = 'filament.club.pages.tenancy.register-club';
+
     public static function getLabel(): string
     {
-        return 'سجّل ناديك';
+        return __('register-club.form.submit');
     }
 
     public function form(Schema $schema): Schema
@@ -35,17 +37,17 @@ class RegisterClub extends RegisterTenant
             ->components([
 
                 TextInput::make('name')
-                    ->label('اسم النادي')
+                    ->label(__('register-club.form.name_label'))
                     ->required()
                     ->maxLength(255),
 
                 TextInput::make('email')
-                    ->label('البريد الإلكتروني للنادي')
+                    ->label(__('register-club.form.email_label'))
                     ->email()
                     ->maxLength(255),
 
                 TextInput::make('phone')
-                    ->label('رقم الهاتف')
+                    ->label(__('register-club.form.phone_label'))
                     ->tel()
                     ->maxLength(30),
 
