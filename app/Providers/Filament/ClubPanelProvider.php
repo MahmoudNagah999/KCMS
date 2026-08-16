@@ -53,10 +53,10 @@ class ClubPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Club/Pages'), for: 'App\Filament\Club\Pages')
             ->discoverWidgets(in: app_path('Filament/Club/Widgets'), for: 'App\Filament\Club\Widgets')
             ->middleware([
-                SetLocale::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
+                SetLocale::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
                 PreventRequestForgery::class,

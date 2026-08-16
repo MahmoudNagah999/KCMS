@@ -23,6 +23,7 @@ use Modules\Club\App\Filament\ClubPlugin;
 use Modules\Subscription\App\Filament\SubscriptionPlugin;
 use App\Http\Middleware\SetPlatformPermissionsTeam;
 use Filament\Navigation\MenuItem;
+use App\Filament\Admin\Pages\Auth\Login;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -32,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(Login::class)
             ->passwordReset()
             ->profile()
             ->colors([
@@ -55,11 +56,11 @@ class AdminPanelProvider extends PanelProvider
                 // FilamentInfoWidget::class,
             ])
             ->middleware([
-                SetLocale::class,
                 SetPlatformPermissionsTeam::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
+                SetLocale::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
                 PreventRequestForgery::class,
