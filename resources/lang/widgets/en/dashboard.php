@@ -29,6 +29,7 @@ return [
         ],
         'expiring_subscriptions' => [
             'heading' => 'Player Subscriptions Expiring Within 7 Days',
+            'empty_state' => 'No subscriptions expiring soon',
             'column' => [
                 'player' => 'Player',
                 'plan' => 'Plan',

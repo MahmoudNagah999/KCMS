@@ -49,6 +49,7 @@ class ExpiringPlayerSubscriptionsWidget extends BaseWidget
 
             ])
             ->defaultSort('ends_at')
-            ->paginated(false);
+            ->paginated(false) 
+            ->emptyStateHeading(__('widgets::dashboard.club.expiring_subscriptions.empty_state'));
     }
 }

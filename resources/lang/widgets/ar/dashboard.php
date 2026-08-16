@@ -29,6 +29,7 @@ return [
         ],
         'expiring_subscriptions' => [
             'heading' => 'اشتراكات لاعبين هتنتهي خلال 7 أيام',
+            'empty_state' => 'مفيش اشتراكات هتنتهي خلال الأيام الجايه',
             'column' => [
                 'player' => 'اللاعب',
                 'plan' => 'الباقة',
